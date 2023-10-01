@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model batch {
+  id                   Int               @id @default(autoincrement())
+  date_started         DateTime          @db.Timestamptz(6)
+  date_finished        DateTime?         @db.Timestamptz(6)
+  recipe_version_id    Int
+  container_version_id Int
+  station_version_id   Int
+  is_experiment        Boolean           @default(false)
+  notes                String?
+  container_version    container_version @relation(fields: [container_version_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  recipe_version       recipe_version    @relation(fields: [recipe_version_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  station_version      station_version   @relation(fields: [station_version_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  batch_progress       batch_progress[]
+}
+
+model batch_progress {
+  id          Int      @id @default(autoincrement())
+  batch_id    Int
+  timestamp   DateTime @default(now()) @db.Timestamptz(6)
+  temperature Decimal? @db.Decimal(5, 2)
+  humidity    Decimal? @db.Decimal(5, 2)
+  ph          Decimal? @db.Decimal(4, 2)
+  bactch      batch    @relation(fields: [batch_id], references: [id])
+}
+
+// Containers
+
+model container {
+  id                Int                 @id @default(autoincrement())
+  rfid              String
+  capacity          Int
+  latest_version    Int                 @default(1)
+  deleted           Boolean             @default(false)
+  container_version container_version[]
+}
+
+model container_version {
+  id           Int       @id @default(autoincrement())
+  rfid         String
+  capacity     Int
+  container_id Int
+  version      Int       @default(1)
+  date_created DateTime  @default(now()) @db.Timestamptz(6)
+  container    container @relation(fields: [container_id], references: [id])
+  batches      batch[]
+}
+
+// Recipes
+
+model recipe {
+  id             Int              @id @default(autoincrement())
+  name           String
+  ingredients    Json             @db.Json
+  notes          String?
+  latest_version Int              @default(1)
+  deleted        Boolean          @default(false)
+  versions       recipe_version[]
+}
+
+model recipe_version {
+  id           Int      @id @default(autoincrement())
+  recipe_id    Int
+  name         String
+  ingredients  Json     @db.Json
+  notes        String?
+  version      Int      @default(1)
+  date_created DateTime @default(now()) @db.Timestamptz(6)
+  recipe       recipe   @relation(fields: [recipe_id], references: [id])
+  batches      batch[]
+}
+
+// Stations
+
+model station {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  mqtt_id         String            @unique
+  last_active     DateTime?         @db.Timestamptz(6)
+  last_message    String?
+  latest_version  Int               @default(1)
+  deleted         Boolean           @default(false)
+  station_version station_version[]
+}
+
+model station_version {
+  id           Int      @id @default(autoincrement())
+  station_id   Int
+  mqtt_id      String
+  name         String
+  version      Int      @default(1)
+  date_created DateTime @default(now()) @db.Timestamptz(6)
+  station      station  @relation(fields: [station_id], references: [id])
+  batch        batch[]
+}
