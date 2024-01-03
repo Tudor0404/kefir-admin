@@ -21,3 +21,13 @@ h4 {
 h5 {
   @apply text-base-content/75;
 }
+
+/** **/
+
+.btn-xs {
+  @apply rounded-sm;
+}
+
+.btn-sm {
+  @apply rounded-md;
+}

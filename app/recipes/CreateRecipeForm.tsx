@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DictionaryEditor from "../components/data-displays/DictionaryEditor";
 import { useAlerts } from "../components/alert/AlertContext";
+import Card from "../components/cards/Card";
 
 interface Item {
 	key: string;
@@ -9,21 +10,15 @@ interface Item {
 }
 
 type Props = {
-	prefix: string;
 	onSubmit: (
 		name: string,
 		ingredients: Item[],
 		notes?: string,
 		id?: number
 	) => Promise<Boolean>;
-	initialName?: string;
-	initialIngredients?: Item[];
-	initialNotes?: string;
-	id?: number;
-	onReset?: () => any;
 };
 
-export default function IngredientForm(props: Props) {
+export default function CreateRecipeForm(props: Props) {
 	const { addAlert } = useAlerts();
 
 	const [name, setName] = useState<string>("");
@@ -33,19 +28,12 @@ export default function IngredientForm(props: Props) {
 	const [notes, setNotes] = useState<string>("");
 	const [id, setID] = useState<number>();
 
-	useEffect(() => {
-		setName(props.initialName || "");
-		setIngredients(props.initialIngredients || [{ key: "", value: "" }]);
-		setNotes(props.initialNotes || "");
-		setID(props.id || undefined);
-	}, [
-		props.id,
-		props.initialIngredients,
-		props.initialName,
-		props.initialNotes,
-	]);
-
 	return (
+		<Card
+				title="Create new recipe"
+				span={false}
+				className="!h-fit"
+			>
 		<form
 			className="form-control w-fit gap-4 min-w-full"
 			onSubmit={async (e) => {
@@ -74,7 +62,6 @@ export default function IngredientForm(props: Props) {
 					name,
 					ingredients,
 					notes,
-					props.id || -1
 				);
 
 				if (res) {
@@ -85,11 +72,9 @@ export default function IngredientForm(props: Props) {
 				}
 			}}
 			onReset={() => {
-				if (props.onReset) props.onReset();
 				setName("");
 				setIngredients([{ key: "", value: "" }]);
 				setNotes("");
-				setID(undefined);
 			}}
 		>
 			<div>
@@ -97,6 +82,7 @@ export default function IngredientForm(props: Props) {
 					<span className="label-text">Recipe Name</span>
 				</label>
 				<input
+					required
 					type="text"
 					placeholder="Mint lemonade"
 					className="input input-bordered w-full"
@@ -133,18 +119,19 @@ export default function IngredientForm(props: Props) {
 
 			<div className="flex justify-start items-center flex-row gap-2">
 				<button
-					className="btn btn-md btn-success "
+					className="btn btn-sm btn-success "
 					type="submit"
 				>
-					{props.prefix} Recipe
+					Create Recipe
 				</button>
 				<button
-					className="btn btn-md btn-warning "
+					className="btn btn-sm btn-warning "
 					type="reset"
 				>
 					Reset
 				</button>
 			</div>
 		</form>
+		</Card>
 	);
 }

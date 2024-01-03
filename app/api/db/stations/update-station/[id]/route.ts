@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 type payload = {
 	name: string;
 	mqtt_id: string;
+	notes?: string;
 };
 
 export async function PATCH(req: Request, context: any) {
@@ -16,10 +17,7 @@ export async function PATCH(req: Request, context: any) {
 
 		const res = await prisma.station.update({
 			where: { id: parseInt(id) },
-			data: {
-				name: reqJSON.name,
-				mqtt_id: reqJSON.mqtt_id,
-			},
+			data: reqJSON,
 		});
 
 		return new NextResponse(`Recipe '${res.name}' has been updated`, {

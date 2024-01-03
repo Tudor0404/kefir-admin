@@ -24,8 +24,9 @@ export async function POST(req: Request) {
 			}
 		);
 	} catch (e: unknown) {
-		console.log(e);
+		
 		if (e instanceof Error) {
+			console.log(e.message);
 			return new NextResponse(e.message, { status: 500 });
 		}
 		return new NextResponse(JSON.stringify(e), { status: 500 });

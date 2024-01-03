@@ -15,6 +15,7 @@ model batch {
   container_version_id Int
   station_version_id   Int
   is_experiment        Boolean           @default(false)
+  deleted              Boolean           @default(false)
   notes                String?
   container_version    container_version @relation(fields: [container_version_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   recipe_version       recipe_version    @relation(fields: [recipe_version_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -60,7 +61,7 @@ model recipe {
   id             Int              @id @default(autoincrement())
   name           String
   ingredients    Json             @db.Json
-  notes          String?
+  notes          String?          @default("")
   latest_version Int              @default(1)
   deleted        Boolean          @default(false)
   versions       recipe_version[]
@@ -71,7 +72,7 @@ model recipe_version {
   recipe_id    Int
   name         String
   ingredients  Json     @db.Json
-  notes        String?
+  notes        String?  @default("")
   version      Int      @default(1)
   date_created DateTime @default(now()) @db.Timestamptz(6)
   recipe       recipe   @relation(fields: [recipe_id], references: [id])
@@ -87,6 +88,7 @@ model station {
   last_active     DateTime?         @db.Timestamptz(6)
   last_message    String?
   latest_version  Int               @default(1)
+  notes           String?           @default("")
   deleted         Boolean           @default(false)
   station_version station_version[]
 }
@@ -97,6 +99,7 @@ model station_version {
   mqtt_id      String
   name         String
   version      Int      @default(1)
+  notes        String?  @default("")
   date_created DateTime @default(now()) @db.Timestamptz(6)
   station      station  @relation(fields: [station_id], references: [id])
   batch        batch[]

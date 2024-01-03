@@ -36,7 +36,7 @@ const AlertHandler: React.FC = () => {
 	};
 
 	return (
-		<div className="fixed bottom-0 right-0 w-full p-6 space-y-4 ">
+		<div className="fixed bottom-0 right-0 w-full p-3 space-y-4 ">
 			{alerts.map((alert) => (
 				<div
 					key={alert.id}

@@ -115,16 +115,13 @@ EXECUTE FUNCTION add_initial_container_version();
 
 
 
-
-
-
 -- STATION FUNCTIONS --
 
 -- Function to increment the station version if the content has changed
 CREATE OR REPLACE FUNCTION increment_station_version() RETURNS TRIGGER AS $$
 BEGIN
     -- Check if the station content has changed
-    IF OLD.mqtt_id != NEW.mqtt_id OR OLD.name != NEW.name THEN
+    IF OLD.mqtt_id != NEW.mqtt_id OR OLD.name != NEW.name OR OLD.notes != NEW.notes THEN
         -- Increment the version number
         NEW.latest_version := OLD.latest_version + 1;
     END IF;
@@ -145,9 +142,9 @@ BEGIN
     -- When an existing station is updated
     IF TG_OP = 'UPDATE' THEN
         -- Check if the station content has changed
-        IF OLD.mqtt_id != NEW.mqtt_id OR OLD.name != NEW.name THEN
-            INSERT INTO station_version (station_id, mqtt_id, last_active, last_message, version, date_created)
-            VALUES (NEW.id, NEW.mqtt_id, NEW.last_active, NEW.last_message, NEW.latest_version, NOW());
+        IF OLD.mqtt_id != NEW.mqtt_id OR OLD.name != NEW.name OR OLD.notes != NEW.notes THEN
+            INSERT INTO station_version (station_id, mqtt_id, last_active, last_message, version, date_created, notes)
+            VALUES (NEW.id, NEW.mqtt_id, NEW.last_active, NEW.last_message, NEW.latest_version, NOW(), NEW.notes);
         END IF;
         RETURN NEW;
     END IF;
@@ -159,8 +156,8 @@ $$ LANGUAGE plpgsql;
 -- Function to add the first version to the version table when a new station is created
 CREATE OR REPLACE FUNCTION add_initial_station_version() RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO station_version (station_id, mqtt_id, name, version, date_created) 
-    VALUES (NEW.id, NEW.mqtt_id, NEW.name, NEW.latest_version, NOW());
+    INSERT INTO station_version(station_id, mqtt_id, name, version, date_created, notes) 
+    VALUES (NEW.id, NEW.mqtt_id, NEW.name, NEW.latest_version, NOW(), NEW.notes);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

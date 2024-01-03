@@ -8,11 +8,12 @@ import { TbMenu2 } from "react-icons/tb";
 import { AlertProvider } from "./components/alert/AlertContext";
 import AlertHandler from "./components/alert/AlertHandler";
 import { ModalProvider } from "./components/modal/ModalContext";
+import { StatusBar } from "./components/status-bar/StatusBar";
 
-export const metadata: Metadata = {
-	title: "Kefir Admin",
-	description: "Admin panel to monitor kefir fermentation",
-};
+// export const metadata: Metadata = {
+// 	title: "Kefir Admin",
+// 	description: "Admin panel to monitor kefir fermentation",
+// };
 
 export default function RootLayout({
 	children,
@@ -32,15 +33,16 @@ export default function RootLayout({
 
 	return (
 		<html>
-			<body className="drawer md:drawer-open">
+			<body className="drawer md:drawer-open pb-3 ">
+			<AlertProvider>
 				<ModalProvider>
-					<AlertProvider>
+					
 						<input
 							id="nav-drawer"
 							type="checkbox"
 							className="drawer-toggle"
 						/>
-						<div className="drawer-content flex flex-col justify-start items-center w-full min-h-screen bg-base-100">
+						<div className="drawer-content flex flex-col justify-start items-center w-full  bg-base-100">
 							<div className="w-full flex justify-between p-2 h-fit">
 								<div className="w-16 flex justify-start items-center">
 									<label
@@ -86,9 +88,10 @@ export default function RootLayout({
 								))}
 							</ul>
 						</div>
+						<StatusBar/>
 						<AlertHandler />
+						</ModalProvider>
 					</AlertProvider>
-				</ModalProvider>
 			</body>
 		</html>
 	);
