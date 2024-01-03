@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function GET(req: NextApiRequest, context: any) {
+export async function GET(req: Request, context: any) {
 	try {
 		const { id } = context.params;
 
