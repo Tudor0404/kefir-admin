@@ -1,13 +1,13 @@
 "use client";
 
-import GridLayout from "../components/layouts/GridLayout";
-import Card from "../components/cards/Card";
-import CardTable from "../components/cards/CardTable";
+import GridLayout from "../../components/layouts/GridLayout";
+import Card from "../../components/cards/Card";
+import CardTable from "../../components/cards/CardTable";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Prisma } from "@prisma/client";
-import { useAlerts } from "../components/alert/AlertContext";
-import { useModal } from "../components/modal/ModalContext";
+import { useAlerts } from "../../components/alert/AlertContext";
+import { useModal } from "../../components/modal/ModalContext";
 import RecipeDisplay from "./RecipeDisplay";
 import CreateRecipeForm from "./CreateRecipeForm";
 import UpdateRecipeForm from "./UpdateRecipeForm";

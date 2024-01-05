@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useAlerts } from "../components/alert/AlertContext";
-import Card from "../components/cards/Card";
+import { useAlerts } from "../../components/alert/AlertContext";
+import Card from "../../components/cards/Card";
 
 type Station = {
     id: number;

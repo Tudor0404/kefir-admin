@@ -1,5 +1,5 @@
-import CardTable from "../components/cards/CardTable";
-import GridLayout from "../components/layouts/GridLayout";
+import CardTable from "../../components/cards/CardTable";
+import GridLayout from "../../components/layouts/GridLayout";
 
 export default function Page() {
 	return (

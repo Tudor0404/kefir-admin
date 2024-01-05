@@ -1,7 +1,7 @@
 "use client";
-import { useAlerts } from "../components/alert/AlertContext";
+import { useAlerts } from "../../components/alert/AlertContext";
 import { useState } from "react";
-import Card from "../components/cards/Card";
+import Card from "../../components/cards/Card";
 
 type Props = {
     onSubmit: (name:string, mqttID:string, notes?: string) => Promise<Boolean>;

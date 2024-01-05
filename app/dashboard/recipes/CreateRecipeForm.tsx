@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import DictionaryEditor from "../components/data-displays/DictionaryEditor";
-import { useAlerts } from "../components/alert/AlertContext";
-import Card from "../components/cards/Card";
+import DictionaryEditor from "../../components/data-displays/DictionaryEditor";
+import { useAlerts } from "../../components/alert/AlertContext";
+import Card from "../../components/cards/Card";
 
 interface Item {
 	key: string;
