@@ -10,5 +10,12 @@ const config: Config = {
 	daisyui: {
 		themes: ["autumn"],
 	},
+	theme: {
+		extend: {
+			screens: {
+				'xs': '480px'
+			}
+		}
+	}
 };
 export default config;

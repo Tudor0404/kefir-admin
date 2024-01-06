@@ -99,7 +99,7 @@ export default function IngredientForm(props: Props) {
         <input
           type="text"
           placeholder="Mint lemonade"
-          className="input input-bordered w-full"
+          className="w-full"
           onChange={(e) => setName(e.target.value)}
           value={name}
         />
@@ -132,10 +132,10 @@ export default function IngredientForm(props: Props) {
       </div>
 
       <div className="flex justify-start items-center flex-row gap-2">
-        <button className="btn btn-sm btn-success " type="submit">
+        <button className=" btn-success " type="submit">
           Update Recipe
         </button>
-        <button className="btn btn-sm btn-warning " type="reset">
+        <button className=" btn-warning " type="reset">
           Reset
         </button>
       </div>

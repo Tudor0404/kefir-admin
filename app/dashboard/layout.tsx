@@ -6,7 +6,7 @@ import { TbMenu2 } from "react-icons/tb";
 import { StatusBar } from "../components/status-bar/StatusBar";
 import { ReactNode } from "react";
 
-export default function DashboardLayout(props: {children: ReactNode}) {
+export default function DashboardLayout(props: { children: ReactNode }) {
   const routes = [
     { label: "Dashboard", path: "/dashboard" },
     { label: "Batches", path: "/dashboard/batches" },
@@ -24,7 +24,10 @@ export default function DashboardLayout(props: {children: ReactNode}) {
       <div className="drawer-content flex flex-col justify-start items-center w-full bg-base-100">
         <div className="w-full flex justify-between p-2 h-fit">
           <div className="w-16 flex justify-start items-center">
-            <label htmlFor="nav-drawer" className="btn btn-square drawer-button md:hidden w-fit h-fit min-h-fit p-1">
+            <label
+              htmlFor="nav-drawer"
+              className="btn btn-square drawer-button md:hidden w-fit h-fit min-h-fit p-1"
+            >
               <TbMenu2 size={24} />
             </label>
           </div>
@@ -37,11 +40,18 @@ export default function DashboardLayout(props: {children: ReactNode}) {
       </div>
       <div className="drawer-side">
         <label htmlFor="nav-drawer" className="drawer-overlay"></label>
-        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+        <ul className="menu p-2 w-60 min-h-full bg-base-200 text-base-content">
           {routes.map((route) => (
-            <li key={route.path} className="mb-2">
-              <Link href={route.path}>
-                <h4 className={pathname === route.path ? "!bg-neutral !text-neutral-content" : ""}>{route.label}</h4>
+            <li key={route.path} className={`mb-1`}>
+              <Link
+                href={route.path}
+                className={
+                  pathname === route.path
+                    ? "!bg-neutral !text-neutral-content"
+                    : ""
+                }
+              >
+                <h4>{route.label}</h4>
               </Link>
             </li>
           ))}

@@ -46,8 +46,11 @@ export default function Page() {
         setRecipes(data);
       }
     } catch {
-      //@ts-ignore
-			addAlert( e.response?.data ?? e.message ?? "Error refreshing station", "error");
+      addAlert(
+        //@ts-ignore
+        e.response?.data ?? e.message ?? "Error refreshing station",
+        "error"
+      );
     } finally {
       setLoading(false);
     }
@@ -73,9 +76,12 @@ export default function Page() {
       await refreshTable();
       return true;
     } catch (e) {
-      //@ts-ignore
-			addAlert( e.response?.data ?? e.message ?? "Error creating recipe", "error");
-			return false;
+      addAlert(
+        //@ts-ignore
+        e.response?.data ?? e.message ?? "Error creating recipe",
+        "error"
+      );
+      return false;
     }
   }
 
@@ -97,12 +103,15 @@ export default function Page() {
 
       addAlert(res.data, "success");
       await refreshTable();
-	  hideModal();
+      hideModal();
       return true;
     } catch (e) {
-      //@ts-ignore
-			addAlert( e.response?.data ?? e.message ?? "Error updating recipe", "error");
-			return false;
+      addAlert(
+        //@ts-ignore
+        e.response?.data ?? e.message ?? "Error updating recipe",
+        "error"
+      );
+      return false;
     }
   }
 
@@ -123,9 +132,12 @@ export default function Page() {
 
       return true;
     } catch (e) {
-      //@ts-ignore
-			addAlert( e.response?.data ?? e.message ?? "Error deleting recipe", "error");
-			return false;
+      addAlert(
+        //@ts-ignore
+        e.response?.data ?? e.message ?? "Error deleting recipe",
+        "error"
+      );
+      return false;
     }
   }
 

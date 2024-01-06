@@ -22,6 +22,14 @@ h5 {
   @apply text-base-content/75;
 }
 
+input {
+  @apply input input-bordered input-sm;
+}
+
+button {
+  @apply btn btn-sm;
+}
+
 /** **/
 
 .btn-xs {
